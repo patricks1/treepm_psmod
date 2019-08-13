@@ -208,20 +208,20 @@ class CosmologyClass(dict):
             ts = [self.age(z) for z in redshifts]
         else:
             raise ValueError('not recognize time kind = %s' % kind)
-        print '# %d snapshots, %s spacing in %s' % (num, spacing, kind)
-        print '# a:',
+        print('# %d snapshots, %s spacing in %s' % (num, spacing, kind))
+        print('# a:', end=" ")
         for aexp in aexps:
-            print '%.4f' % aexp,
-        print '\n# z:',
+            print('%.4f' % aexp, end=" ")
+        print('\n# z:', end=" ")
         for z in redshifts:
-            print '%.4f' % z,
-        print '\n# t:',
+            print('%.4f' % z, end=" ")
+        print('\n# t:', end=" ")
         for t in ts:
-            print '%.4f' % t,
-        print '\n# dt:',
-        for ti in xrange(len(ts) - 1):
-            print '%.3f' % (ts[ti + 1] - ts[ti]),
-        print '\n'
+            print('%.4f' % t, end=" ")
+        print('\n# dt:', end=" ")
+        for ti in range(len(ts) - 1):
+            print('%.3f' % (ts[ti + 1] - ts[ti]), end=" ")
+        print('\n')
 
     def make_distance_v_redshift_spline(self, z_lim=[0, 0.2], z_num=100, assume_hubble=False):
         '''

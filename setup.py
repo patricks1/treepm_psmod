@@ -5,13 +5,13 @@ __version__ = '0.1'
 
 setup(name = 'wTreepm',
       version = __version__,
-      description = 'hacked light-weight version of Andrew Wetzels TreePM code',
-      author='ChangHoon Hahn',
-      author_email='hahn.changhoon@gmail.com',
+      description = 'Hacked, light-weight, Python3 version of Andrew Wetzels TreePM code. Originally hacked by ChangHoon Hahn. Further modified by Patrick Staudt.',
+      author='Patrick Staudt',
+      author_email='patrickstaudt1@gmail.com',
       url='',
       platforms=['*nix'],
       license='GPL',
       requires = ['numpy', 'scipy'],
-      provides = ['wtreepm'],
-      packages = ['wtreepm', 'wtreepm.utility']
+      provides = ['treepm_psmod'],
+      packages = ['treepm_psmod', 'treepm_psmod.utility']
       )

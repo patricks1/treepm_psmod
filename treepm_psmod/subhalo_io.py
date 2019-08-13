@@ -1,6 +1,4 @@
 '''
-hacked light-weight version of andrew wetzel's treepm code 
-
 Reads in subtree.dat & halotree.dat from tree directory.
 
 Masses in log {M_sun}, distances in {Mpc comoving}.
@@ -53,6 +51,8 @@ zi    aexp      redshift  t {Gyr} t_wid {Gyr}
 33    0.1989    4.0277     1.5726 0.1106
 34    0.1894    4.2798     1.4620 0.0000
 '''
+
+# system -----
 from __future__ import division
 from numpy import log10, Inf, int32, float32
 import numpy as np
@@ -63,17 +63,18 @@ import copy
 from . import cosmology
 from . import utility as ut
 
+RESEARCH_DIRECTORY = ''
 
-#===================================================================================================
+#==============================================================================
 # read in
-#===================================================================================================
+#==============================================================================
 # Martin's TreePM ----------
 class TreepmClass(ut.io.SayClass):
     '''
     Read [sub]halo catalog snapshots, return as list class.
     '''
     def __init__(self, sigma_8=0.8):
-        self.treepm_directory = os.environ.get('TREEPM_DIR') 
+        self.treepm_directory = '/data1/arwetzel/'
         self.dimen_num = 3
         self.particle_num = {
             # connect simulation box length {Mpc/h comoving} to number of particles per dimension.
@@ -103,7 +104,7 @@ class TreepmClass(ut.io.SayClass):
             catz = ut.array.DictClass()
             catz['pos'] = []    # position (3D) of most bound particle {Mpc/h -> Mpc comoving}
             catz['vel'] = []    # velocity (3D) {Mpc/h/Gyr -> Mpc/Gyr comoving}
-            #catz['m.bound'] = []    # mass of subhalo {M_sun}
+            catz['m.bound'] = []    # mass of subhalo {M_sun}
             #catz['vel.circ.max'] = []    # maximum of circular velocity {km/s physical}
             catz['m.max'] = []    # maximum mass in history {M_sun}
             #catz['vel.circ.peak'] = []    # max of max of circular velocity {km/s physical}
@@ -111,7 +112,7 @@ class TreepmClass(ut.io.SayClass):
             # 1 = central, 2 = virtual central, 0 = satellite, -1 = virtual satellite,
             # -2 = virtual satellite with no central, -3 = virtual satellite with no halo
             catz['par.i'] = []    # index of parent, at previous snapshot, with highest M_max
-            #catz['par.n.i'] = []    # index of next parent to same child, at same snapshot
+            catz['par.n.i'] = []    # index of next parent to same child, at same snapshot
             catz['chi.i'] = []    # index of child, at next snapshot
             catz['m.frac.min'] = []    # minimum M_bound / M_max experienced
             #catz['m.max.rat.raw'] = []    # M_max ratio of two highest M_max parents (< 1)
@@ -120,9 +121,9 @@ class TreepmClass(ut.io.SayClass):
             #catz['sat.i'] = []    # index of next highest M_max satellite in same halo
             catz['halo.i'] = []    # index of host halo
             catz['halo.m'] = []    # FoF mass of host halo {M_sun}
-            #catz['inf.last.zi'] = []    # snapshot before fell into current halo
-            #catz['inf.last.i'] = []    # index before fell into current halo
-            #catz['inf.dif.zi'] = []    # snapshot when sat/central last was central/sat
+            catz['inf.last.zi'] = []    # snapshot before fell into current halo
+            catz['inf.last.i'] = []    # index before fell into current halo
+            catz['inf.dif.zi'] = []    # snapshot when sat/central last was central/sat
             #catz['inf.dif.i'] = []    # index when sat/central last was central/sat
             #catz['inf.first.zi'] = []    # snapshot before first fell into another halo
             #catz['inf.first.i'] = []    # index before first fell into another halo
@@ -146,10 +147,10 @@ class TreepmClass(ut.io.SayClass):
             catz['c.200c'] = []    # concentration (200c) from unweighted fit of NFW M(< r)
             #catz['c.fof'] = []    # concentration derive from r_{2/3 mass} / r_{1/3 mass}
             catz['par.i'] = []    # index of parent, at previous snapshot, with max mass
-            #catz['par.n.i'] = []    # index of next parent to same child, at same snapshot
+            catz['par.n.i'] = []    # index of next parent to same child, at same snapshot
             catz['chi.i'] = []    # index of child, at next snapshot
             #catz['m.fof.rat'] = []    # FoF mass ratio of two highest mass parents (< 1)
-            #catz['cen.i'] = []     # index of central subhalo
+            catz['cen.i'] = []     # index of central subhalo
         else:
             raise ValueError('catalog kind = %s not valid' % catalog_kind)
         self.directory_sim = self.treepm_directory + 'lcdm%d/' % box_length
